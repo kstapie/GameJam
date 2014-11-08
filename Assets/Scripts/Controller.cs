@@ -73,7 +73,7 @@ public class Controller : MonoBehaviour
         // Power indicator
         if (isDrawPowerInd)
         {
-            GUI.Box(new Rect(20, 20, (Time.time - startTime + 1)*50, 20),"");
+            GUI.Box(new Rect(125, 585, (Time.time - startTime + 1)*50, 25),"");
         }
     }
 
