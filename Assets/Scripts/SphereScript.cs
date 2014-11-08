@@ -3,7 +3,10 @@ using System.Collections;
 
 public class SphereScript : MonoBehaviour 
 {
-    private isOutOfPool = false;
+    public Transform bound1;
+    public Transform bound2;
+    public Transform bound3;
+    public Transform bound4;
 
 	// Use this for initialization
 	void Start () {
@@ -15,14 +18,13 @@ public class SphereScript : MonoBehaviour
 	
 	}
 
-    // Outside of pool, destroy
-    void OnTriggerStay(Collider other)
+    // If ball touch bounds, destroy
+    void OnTriggerEnter(Collider other)
     {
-        // Check if the other object is a Pool
-        PoolScript pool = other.GetComponent<PoolScript>();
-        if (pool != null)
+        // Check if this is the boundary
+        if ((other.transform == bound1)||(other.transform == bound2)||(other.transform == bound3)||(other.transform == bound4))
         {
-            DestroyImmediate(gameObject);
+            Destroy(gameObject);
         }
     }
 }
