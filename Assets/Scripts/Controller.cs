@@ -3,11 +3,17 @@ using System.Collections;
 
 public class Controller : MonoBehaviour 
 {
-	public float explodeRadius = 1f;
-	public float explodePower = 5.0f;
+	public float explodeRadius;
+	public float explodePower;
+	public Vector3 shotPos;
+	public float startTime;
+	public float endTime;
 	
 	// Use this for initialization
 	void Start () {
+		explodeRadius = 1f;
+		explodePower = 5.0f;
+		Time.timeScale = 1;
 	}
 	
 	// Update is called once per frame
@@ -15,17 +21,24 @@ public class Controller : MonoBehaviour
 	{
 		if (Input.GetMouseButtonDown (0)) 
 		{
-			Vector3 mousePos = Input.mousePosition;
-			mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-			mousePos.z = 0;
-			
-			Collider[] colliders = Physics.OverlapSphere(mousePos, explodeRadius);
+			shotPos = Input.mousePosition;
+			shotPos = Camera.main.ScreenToWorldPoint(shotPos);
+			shotPos.z = 0;
+			startTime = Time.time;
+		}
+
+		if(Input.GetMouseButtonUp (0))
+		{
+			endTime = Time.time;
+			explodePower = (endTime - startTime)*5;
+
+			Collider[] colliders = Physics.OverlapSphere(shotPos, explodeRadius);
 			
 			foreach (Collider collider in colliders)
 			{
-				if (collider && collider.rigidbody && !IsInside(collider ,mousePos, explodeRadius) /*&& !collider.bounds.Contains(mousePos)*/)
+				if (collider && collider.rigidbody && !IsInside(collider ,shotPos, explodeRadius) /*&& !collider.bounds.Contains(mousePos)*/)
 				{
-					Vector3 ray = collider.transform.position - mousePos;
+					Vector3 ray = collider.transform.position - shotPos;
 					ray.z=0;
 					Vector3 rayDirection = ray.normalized;
 					float rayDistance = ray.magnitude;
@@ -36,6 +49,12 @@ public class Controller : MonoBehaviour
 				}
 			}
 		}
+
+
+		if(Input.GetAxis("Mouse ScrollWheel") != 0){
+			explodeRadius += Input.GetAxis("Mouse ScrollWheel");
+		}
+
 		if (Input.GetKeyDown ("r"))
 		{
 			Application.LoadLevel(Application.loadedLevel);
