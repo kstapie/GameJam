@@ -60,6 +60,12 @@ public class Controller : MonoBehaviour
 		if(Input.GetAxis("Mouse ScrollWheel") != 0){
 			explodeRadius += Input.GetAxis("Mouse ScrollWheel");
 		}
+		if (explodeRadius < 1) {
+			explodeRadius = 1;
+		}
+		if (explodeRadius > 5) {
+			explodeRadius = 5;
+		}
 
 		if (Input.GetKeyDown ("r"))
 		{
@@ -75,6 +81,9 @@ public class Controller : MonoBehaviour
         {
             GUI.Box(new Rect(125, 585, (Time.time - startTime + 1)*50, 25),"");
         }
+		float diameter = 2 * explodeRadius;
+		//GUI.DrawTexture(Rect(Event.current.mousePosition.x-explodeRadius, Event.current.mousePosition.y-explodeRadius, diameter, diameter), Texture);
+		//GUI.DrawTexture (Rect (100, 100, 50, 50), ripple2_KG);
     }
 
 	//function from DrakharStudio http://answers.unity3d.com/questions/163864/test-if-point-is-in-collider.html
