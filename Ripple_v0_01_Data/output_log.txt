@@ -1,0 +1,22 @@
+Initialize engine version: 4.5.1f3 (73cd57f80e3e)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: AMD FirePro W7000 (FireGL V) (ID=0x6808)
+    Vendor:   ATI
+    VRAM:     3072 MB
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\cory.thompson527\Documents\GitHub\GameJam\Ripple_v0_01_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\cory.thompson527\Documents\GitHub\GameJam\Ripple_v0_01_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\cory.thompson527\Documents\GitHub\GameJam\Ripple_v0_01_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\cory.thompson527\Documents\GitHub\GameJam\Ripple_v0_01_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+- Completed reload, in  0.039 seconds
+desktop: 1920x1200 60Hz; virtual: 3120x1920 at 0,-376
+<RI> Initializing input.
+<RI> Input initialized.
+UnloadTime: 0.218194 ms
+Unloading 6 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 203.
+Total: 0.442255 ms (FindLiveObjects: 0.006745 ms CreateObjectMapping: 0.006452 ms MarkObjects: 0.078597 ms  DeleteObjects: 0.009384 ms)
+

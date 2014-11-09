@@ -154,7 +154,6 @@ public class Controller : MonoBehaviour
 				float xPos = ripple.shotPos.x;
 				float yPos = ripple.shotPos.y;
 				float rad = ripple.rippleRadius * 50;
-				Debug.Log(yPos);
 				Rect rect = new Rect(xPos - rad, yPos - rad, rad*2, rad*2);
 				GUI.DrawTexture( rect, tex );
 			}
