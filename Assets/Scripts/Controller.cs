@@ -10,20 +10,39 @@ public class Controller : MonoBehaviour
 	public float endTime;
     public bool isDrawPowerInd = false;
 	public Texture tex;
+	
+	public int scoreBest = 0;
+	public int turn = 0;
+	public int par = 10;
 
-	private int par = 0;
-	private int parBest = 9999;
+
+
+	public void Win()
+	{
+		if ((par - turn) > scoreBest) 
+		{
+			IniFile ini=new IniFile("save.ini");
+			ini.set (Application.loadedLevelName,par - turn);
+			ini.save ("save.ini");
+		}
+	}
 
 	// Use this for initialization
 	void Start () {
 		explodeRadius = 1f;
 		explodePower = 5.0f;
 		Time.timeScale = 1;
+
+		IniFile ini=new IniFile("save.ini");
+		scoreBest = ini.get (Application.loadedLevelName,0);
+		ini.save ("save.ini");
 	}
 	
+
 	// Update is called once per frame
 	void Update () 
 	{
+
 		if (Input.GetMouseButtonDown (0)) 
 		{
 			shotPos = Input.mousePosition;
@@ -57,7 +76,8 @@ public class Controller : MonoBehaviour
 			}
 
             isDrawPowerInd = false;
-			par++;
+			turn++;
+			if (turn>par) turn = par;
 		}
 
 
@@ -88,6 +108,11 @@ public class Controller : MonoBehaviour
 		float diameter = (2 * explodeRadius)*50;
 
 		GUI.DrawTexture(new Rect(Event.current.mousePosition.x - diameter/2, Event.current.mousePosition.y - diameter/2, diameter, diameter), tex,ScaleMode.StretchToFill);
+
+		// Par / Best par
+		GUI.Label (new Rect (25, 25, 300, 50), "Score: " + (par-turn).ToString ());
+		GUI.Label (new Rect (25, 50, 300, 50), "Best score: " + (scoreBest).ToString ());
+		GUI.Label (new Rect (25, 70, 300, 50), "Par: " + par.ToString());
 	}
 
 	//function from DrakharStudio http://answers.unity3d.com/questions/163864/test-if-point-is-in-collider.html
