@@ -26,9 +26,7 @@ public class Controller : MonoBehaviour
 	{
 		if (Input.GetMouseButtonDown (0)) 
 		{
-			shotPos = Input.mousePosition;
-			shotPos = Camera.main.ScreenToWorldPoint(shotPos);
-			shotPos.z = 0;
+
 			startTime = Time.time;
 
             isDrawPowerInd = true;
@@ -38,6 +36,12 @@ public class Controller : MonoBehaviour
 		{
 			endTime = Time.time;
 			explodePower = (endTime - startTime)*5;
+			isDrawPowerInd = false;
+
+			shotPos = Input.mousePosition;
+			shotPos = Camera.main.ScreenToWorldPoint(shotPos);
+			shotPos.z = 0;
+
 
 			Collider[] colliders = Physics.OverlapSphere(shotPos, explodeRadius);
 			
@@ -54,9 +58,7 @@ public class Controller : MonoBehaviour
 					
 					//collider.rigidbody.AddExplosionForce(explodePower, mousePos, explodeRadius, 0.0f, ForceMode.Impulse);
 				}
-			}
-
-            isDrawPowerInd = false;
+			}            
 			par++;
 		}
 
