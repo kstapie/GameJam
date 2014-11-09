@@ -8,7 +8,9 @@ public class Controller : MonoBehaviour
 	public Vector3 shotPos;
 	public float startTime;
 	public float endTime;
-	
+
+    public bool isDrawPowerInd = false;
+  
 	// Use this for initialization
 	void Start () {
 		explodeRadius = 1f;
@@ -25,6 +27,8 @@ public class Controller : MonoBehaviour
 			shotPos = Camera.main.ScreenToWorldPoint(shotPos);
 			shotPos.z = 0;
 			startTime = Time.time;
+
+            isDrawPowerInd = true;
 		}
 
 		if(Input.GetMouseButtonUp (0))
@@ -48,6 +52,8 @@ public class Controller : MonoBehaviour
 					//collider.rigidbody.AddExplosionForce(explodePower, mousePos, explodeRadius, 0.0f, ForceMode.Impulse);
 				}
 			}
+
+            isDrawPowerInd = false;
 		}
 
 
@@ -61,6 +67,16 @@ public class Controller : MonoBehaviour
 		}
 	}
 	
+    // GUI
+    void OnGUI()
+    {
+        // Power indicator
+        if (isDrawPowerInd)
+        {
+            GUI.Box(new Rect(20, 20, (Time.time - startTime + 1)*50, 20),"");
+        }
+    }
+
 	//function from DrakharStudio http://answers.unity3d.com/questions/163864/test-if-point-is-in-collider.html
 	static public bool IsInside ( Collider test, Vector3 point, float explodeRadius)
 	{
