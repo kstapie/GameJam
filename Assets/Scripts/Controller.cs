@@ -8,9 +8,12 @@ public class Controller : MonoBehaviour
 	public Vector3 shotPos;
 	public float startTime;
 	public float endTime;
-
     public bool isDrawPowerInd = false;
-  
+	public Texture tex;
+
+	private int par = 0;
+	private int parBest = 9999;
+
 	// Use this for initialization
 	void Start () {
 		explodeRadius = 1f;
@@ -54,6 +57,7 @@ public class Controller : MonoBehaviour
 			}
 
             isDrawPowerInd = false;
+			par++;
 		}
 
 
@@ -81,10 +85,10 @@ public class Controller : MonoBehaviour
         {
             GUI.Box(new Rect(125, 585, (Time.time - startTime + 1)*50, 25),"");
         }
-		float diameter = 2 * explodeRadius;
-		//GUI.DrawTexture(Rect(Event.current.mousePosition.x-explodeRadius, Event.current.mousePosition.y-explodeRadius, diameter, diameter), Texture);
-		//GUI.DrawTexture (Rect (100, 100, 50, 50), ripple2_KG);
-    }
+		float diameter = (2 * explodeRadius)*50;
+
+		GUI.DrawTexture(new Rect(Event.current.mousePosition.x - diameter/2, Event.current.mousePosition.y - diameter/2, diameter, diameter), tex,ScaleMode.StretchToFill);
+	}
 
 	//function from DrakharStudio http://answers.unity3d.com/questions/163864/test-if-point-is-in-collider.html
 	static public bool IsInside ( Collider test, Vector3 point, float explodeRadius)
