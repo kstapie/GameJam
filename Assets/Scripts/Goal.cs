@@ -3,7 +3,8 @@ using System.Collections;
 
 public class Goal : MonoBehaviour {
 
-	void OnTriggerEnter(Collider collider){
+	void OnTriggerEnter(Collider collider)
+    {
 		if(collider.Equals(GameObject.Find("Player").collider)){
 			Time.timeScale=0;
 			Debug.Log ("win");
@@ -12,5 +13,12 @@ public class Goal : MonoBehaviour {
 			 * ...and has buttons to take player to main menu or next level...
 			 */
 		}
+
+        // If it's a DeathBall, lose
+        if (collider.gameObject.name == "DeathBall")
+        {
+            Time.timeScale = 0;
+            Debug.Log("lose");
+        }
 	}
 }
