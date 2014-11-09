@@ -1,15 +1,32 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Controller : MonoBehaviour 
 {
+	public class Ripple {
+		public Vector3 shotPos;
+		public float explodeRadius;
+		public float explodePower;
+		public float rippleRadius;
+
+		public Ripple(Vector3 shotP, float explodeR, float explodeP) {
+			rippleRadius = 0.0f;
+			shotPos = shotP;
+			explodePower = explodeP;
+			explodeRadius = explodeR;
+		}
+	}
+
 	public float explodeRadius;
 	public float explodePower;
 	public Vector3 shotPos;
+	public Vector3 ripplePos;
 	public float startTime;
 	public float endTime;
     public bool isDrawPowerInd = false;
 	public Texture tex;
+	public List<Ripple> ripples;
 
 	private int par = 0;
 	private int parBest = 9999;
@@ -19,6 +36,8 @@ public class Controller : MonoBehaviour
 		explodeRadius = 1f;
 		explodePower = 5.0f;
 		Time.timeScale = 1;
+		ripples = new List<Ripple> ();	
+
 	}
 	
 	// Update is called once per frame
@@ -28,7 +47,6 @@ public class Controller : MonoBehaviour
 		{
 
 			startTime = Time.time;
-
             isDrawPowerInd = true;
 		}
 
@@ -42,6 +60,10 @@ public class Controller : MonoBehaviour
 			shotPos = Camera.main.ScreenToWorldPoint(shotPos);
 			shotPos.z = 0;
 
+			ripplePos = Input.mousePosition;
+			ripplePos.z = 0;
+			ripplePos.y = Mathf.Abs (ripplePos.y - Screen.height);
+			ripples.Add(new Ripple(ripplePos, explodeRadius, explodePower));
 
 			Collider[] colliders = Physics.OverlapSphere(shotPos, explodeRadius);
 			
@@ -77,6 +99,7 @@ public class Controller : MonoBehaviour
 		{
 			Application.LoadLevel(Application.loadedLevel);
 		}
+
 	}
 	
     // GUI
@@ -90,6 +113,23 @@ public class Controller : MonoBehaviour
 		float diameter = (2 * explodeRadius)*50;
 
 		GUI.DrawTexture(new Rect(Event.current.mousePosition.x - diameter/2, Event.current.mousePosition.y - diameter/2, diameter, diameter), tex,ScaleMode.StretchToFill);
+
+		foreach (Ripple ripple in ripples) {
+			if (ripple.rippleRadius < ripple.explodeRadius) {
+				ripple.rippleRadius += (ripple.explodeRadius / 100);
+				float xPos = ripple.shotPos.x;
+				float yPos = ripple.shotPos.y;
+				float rad = ripple.rippleRadius * 50;
+				Debug.Log(yPos);
+				Rect rect = new Rect(xPos - rad, yPos - rad, rad*2, rad*2);
+				GUI.DrawTexture( rect, tex );
+			}
+			else
+			{
+				//ripples.Remove (ripple);
+			}
+		}
+
 	}
 
 	//function from DrakharStudio http://answers.unity3d.com/questions/163864/test-if-point-is-in-collider.html
@@ -114,5 +154,4 @@ public class Controller : MonoBehaviour
 		// If we hit the collider, point is outside. So we return !hit
 		return !hit;
 	}
-	
 }
